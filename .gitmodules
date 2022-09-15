@@ -1,3 +1,3 @@
 [submodule "external/pymbta_predictions"]
 	path = external/pymbta_predictions
-	url = git@github.com:collinsben/pymbta_predictions.git
+	url = https://github.com/collinsben/pymbta_predictions.git
