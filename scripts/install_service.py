@@ -11,7 +11,7 @@ service_file_path = f'/lib/systemd/system/{sys.argv[2]}.service'
 
 service_file_data = (
   '[Unit]\n'
-  'Description=PiCounter\n'
+  'Description=MBTATicker\n'
   'After=network.target\n'
   '[Service]\n'
   f'ExecStart={exec_path}\n'
