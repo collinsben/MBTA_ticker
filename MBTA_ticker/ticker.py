@@ -6,7 +6,7 @@ import digitalio
 from PIL import Image, ImageDraw, ImageFont
 import adafruit_ssd1305
 
-import pymbta_predictions
+from pymbta_predictions import mbta, predictions
 
 UPDATE_RATE_S = 5
 
@@ -42,8 +42,8 @@ def run():
       continue
 
     # Get MBTA predictions
-    predictions = pymbta_predictions.query.get_predictions_for_stop(
-      pymbta_predictions.mbta.place_keys['central'])
+    trains = predictions.get_predictions_for_stop(
+      mbta.place_keys['central'])
 
     # Clear display.
     oled.fill(0)
@@ -53,10 +53,16 @@ def run():
     # Get drawing object to draw on image.
     draw = ImageDraw.Draw(image)
 
-    draw.text((x, top + 0), predictions[0][0]['display_str'], font=font, fill=255)
-    draw.text((x, top + 8), predictions[0][1]['display_str'], font=font, fill=255)
-    draw.text((x, top + 16), predictions[1][0]['display_str'], font=font, fill=255)
-    draw.text((x, top + 25), predictions[1][1]['display_str'], font=font, fill=255)
+    disp_lines = []
+    for direction in [0, 1]:
+      for train_num in [0, 1]:
+        disp_lines.append(
+          f'{trains[direction][train_num]["headsign"]}: {trains[direction][train_num]["display_str"]}')
+
+    y_val = top
+    for line in disp_lines:
+      draw.text((x, y_val), line, font=font, fill=255)
+      y_val += 8
 
     oled.image(image)
     oled.show()
