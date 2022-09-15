@@ -9,7 +9,7 @@ setuptools.setup(
   entry_points={
     'console_scripts':
       ['mbta_ticker = MBTA_ticker.ticker:run',
-       'hello_world = MBTA_ticker.display_Test:run'],
+       'hello_world = MBTA_ticker.display_test:run'],
   },
   install_requires=[
     'Adafruit-Blinka',
