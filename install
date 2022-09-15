@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Setup script for Unix. Windows can get lost.
+
+# Make sure submodules are updated
+git submodule update --init --recursive
+
+SERVICE_NAME="mbta_ticker"
+EXT_SCRIPT_FOLDER="external"
+REPO_DIR=$(pwd)
+VENV_NAME="venv"
+
+EXT_SCRIPT_DIR="$REPO_DIR"/"$EXT_SCRIPT_FOLDER"
+
+# Generate the venv and activate it
+python3 -m venv "$REPO_DIR"/"$VENV_NAME"
+source ./"$VENV_NAME"/bin/activate
+
+# Update pip
+pip install --upgrade pip
+
+# Install our package in editable mode
+pip install -e .
+
+# Install packages in the external/ folder
+if [ -d "$EXT_SCRIPT_DIR" ]; then
+    echo "Installing external packages"
+    for PACKAGE_PATH in "$EXT_SCRIPT_DIR"/*; do
+        echo "Installing $PACKAGE_PATH"
+        pip install -e "$PACKAGE_PATH"
+    done
+else
+    echo "No external packages to install"
+fi
+
+# Install the service
+echo "Installing service..."
+sudo python scripts/install_service.py "$REPO_DIR"/"$VENV_NAME"/bin/run_logger "$SERVICE_NAME"
+#sudo systemctl enable "$SERVICE_NAME".service
+echo "done"
