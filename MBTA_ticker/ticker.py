@@ -10,6 +10,12 @@ from pymbta_predictions import mbta, predictions
 
 UPDATE_RATE_S = 15
 
+# Time to stay on after movement
+HOLD_ONTIME_S = 10
+
+# Shhh global variable
+off_time = 0
+
 oled_reset = digitalio.DigitalInOut(board.D4)
 motion_sense = digitalio.DigitalInOut(board.D17)
 motion_sense.direction = digitalio.Direction.INPUT
@@ -27,7 +33,9 @@ oled = adafruit_ssd1305.SSD1305_I2C(WIDTH, HEIGHT, i2c, addr=0x3c, reset=oled_re
 
 
 def check_motion_sense():
-  return motion_sense.value
+  if motion_sense.value:
+    off_time = time.time() + HOLD_ONTIME_S
+  return time.time() < off_time
 
 
 def run():
