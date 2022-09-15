@@ -33,6 +33,7 @@ oled = adafruit_ssd1305.SSD1305_I2C(WIDTH, HEIGHT, i2c, addr=0x3c, reset=oled_re
 
 
 def check_motion_sense():
+  global off_time
   if motion_sense.value:
     off_time = time.time() + HOLD_ONTIME_S
   return time.time() < off_time
