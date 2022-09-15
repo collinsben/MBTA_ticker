@@ -37,5 +37,5 @@ fi
 # Install the service
 echo "Installing service..."
 sudo python scripts/install_service.py "$REPO_DIR"/"$VENV_NAME"/bin/run_logger "$SERVICE_NAME"
-#sudo systemctl enable "$SERVICE_NAME".service
+sudo systemctl enable "$SERVICE_NAME".service
 echo "done"
