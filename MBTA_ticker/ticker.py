@@ -95,7 +95,6 @@ def run():
       # Clear display.
       oled.fill(0)
       oled.show()
-      image = Image.new("1", (width, height))
 
       y_val = top
       for line in disp_lines:
