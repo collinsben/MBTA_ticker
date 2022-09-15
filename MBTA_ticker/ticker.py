@@ -25,6 +25,7 @@ BORDER = 8
 i2c = board.I2C()
 oled = adafruit_ssd1305.SSD1305_I2C(WIDTH, HEIGHT, i2c, addr=0x3c, reset=oled_reset)
 
+
 def check_motion_sense():
   return motion_sense.value
 
@@ -50,30 +51,39 @@ def run():
   update_display = False
   display_state = False
 
+  print("Starting...")
+
   while True:
     if time.time() > next_update:
       # Poll the server for updated info at a slower rate
+      print("Checking for updates")
       try:
         # Get MBTA predictions
         trains = predictions.get_predictions_for_stop(
           mbta.place_keys['central'], 'Red', 2)
       except Exception as exc:
+        print(exc)
         draw.rectangle((0, 0, width, height), outline=0, fill=0)
         draw.text((x, top), "Unable to retrieve data", font=font, fill=255)
         oled.image(image)
         oled.show()
         trains = []
+      print(trains)
       update_display = True
       next_update += UPDATE_RATE_S
 
     if check_motion_sense():
       if not display_state:
+        print("detected movement")
         update_display = True
       display_state = True
+    else:
+      display_state = False
 
     if display_state:
       if not update_display:
         continue
+      print("updating display")
       update_display = False
       draw.rectangle((0, 0, width, height), outline=0, fill=0)
       disp_lines = []
