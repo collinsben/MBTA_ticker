@@ -48,7 +48,7 @@ def run():
     (oled.width // 2 - font_width // 2, oled.height // 2 - font_height // 2),
     text,
     font=font,
-    fill=255,
+    fill=128,
   )
 
   # Display image
