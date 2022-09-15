@@ -17,5 +17,6 @@ setuptools.setup(
     'adafruit-circuitpython-framebuf',
     'adafruit-circuitpython-ssd1305',
     'RPi.GPIO',
+    'Pillow'
   ]
 )
