@@ -43,7 +43,7 @@ def run():
 
     # Get MBTA predictions
     trains = predictions.get_predictions_for_stop(
-      mbta.place_keys['central'])
+      mbta.place_keys['central'], 'Red', 2)
 
     # Clear display.
     oled.fill(0)
