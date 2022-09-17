@@ -21,8 +21,6 @@ motion_sense = digitalio.DigitalInOut(board.D17)
 motion_sense.direction = digitalio.Direction.INPUT
 motion_sense.pull = digitalio.Pull.DOWN
 
-# Change these
-# to the right size for your display!
 WIDTH = 128
 HEIGHT = 32
 BORDER = 8
@@ -103,8 +101,8 @@ def run():
             f'{trains[direction][train_num]["headsign"]}: {trains[direction][train_num]["display_str"]}')
 
       # Clear display.
-      oled.fill(0)
-      oled.show()
+      # oled.fill(0)
+      # oled.show()
 
       y_val = top
       for line in disp_lines:
