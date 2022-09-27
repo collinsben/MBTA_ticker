@@ -72,10 +72,14 @@ def run():
       except Exception as exc:
         print(exc)
         draw.rectangle((0, 0, width, height), outline=0, fill=0)
-        draw.text((x, top), "Unable to retrieve data", font=font, fill=255)
+        draw.text((x, top), ".", font=font, fill=255)
         oled.image(image)
         oled.show()
         trains = []
+        # Add in some extra delay here to cut down on the number of requests when things aren't
+        # running (like a night)
+        time.sleep(10)
+
       print(trains)
       update_display = True
       next_update += UPDATE_RATE_S
@@ -100,18 +104,11 @@ def run():
           disp_lines.append(
             f'{trains[direction][train_num]["headsign"]}: {trains[direction][train_num]["display_str"]}')
 
-      # Clear display.
-      # oled.fill(0)
-      # oled.show()
-
       y_val = top
       for line in disp_lines:
         draw.text((x, y_val), line, font=font, fill=255)
         y_val += 8
 
       oled.image(image)
-      oled.show()
-    else:
-      oled.fill(0)
       oled.show()
     time.sleep(0.1)
