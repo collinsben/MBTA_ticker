@@ -101,8 +101,12 @@ def run():
       disp_lines = []
       for direction in [0, 1]:
         for train_num in [0, 1]:
-          disp_lines.append(
-            f'{trains[direction][train_num]["headsign"]}: {trains[direction][train_num]["display_str"]}')
+          try:
+            disp_lines.append(
+              f'{trains[direction][train_num]["headsign"]}: '
+              f'{trains[direction][train_num]["display_str"]}')
+          except:
+            disp_lines.append('')
 
       y_val = top
       for line in disp_lines:
